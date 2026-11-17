@@ -31,13 +31,15 @@ A diagram can be built entirely from `<div>`, `<span>`, Flexbox, CSS Grid, backg
 
 ## Included converter
 
-When a local shell is available and `python`, `playwright`, `beautifulsoup4`, `Pillow`, `pandoc`, and Chromium exist, use `scripts/convert.py` as a starting point:
+When a local shell is available and `python`, `playwright`, `beautifulsoup4`, `Pillow`, `python-docx`, `pandoc`, and Chromium exist, use `scripts/convert.py` as a starting point:
 
 ```bash
 python scripts/convert.py input.html output.docx --review
 ```
 
-The converter provides first-pass automatic diagram detection, browser element screenshots, a detection manifest, and DOCX export. **Inspect the manifest and the final Word document**; redo any imperfect selections. Use `--review` for an optional PDF/page-image preview if LibreOffice and `pdftoppm` are available. If automatic detection missed a diagram, identify the correct outer container, add `data-export-as-image="true"` to that element in an export copy, and rerun.
+The converter provides first-pass automatic diagram detection (explicit markers, named containers, CSS layout heuristics, and standalone `<svg>`/`<canvas>`), browser element screenshots, a detection manifest, and DOCX export. It un-clips diagrams inside scroll containers, widens the viewport for wide content, sizes images at their true CSS size (capped to the printable area), and drops `display:none` content. **Inspect the manifest and the final Word document**; redo any imperfect selections. Use `--review` for an optional PDF/page-image preview if LibreOffice and `pdftoppm` are available. If automatic detection missed a diagram, identify the correct outer container, add `data-export-as-image="true"` (and optionally `data-caption="..."`) to that element in an export copy, and rerun.
+
+**Security defaults:** network access is blocked and only local files inside the HTML's folder (`--asset-root`) can be embedded. Pass `--allow-network` only for trusted HTML that needs remote fonts or images, and say so to the user. Report any entries under `security.blocked_local_references` or `removed_remote_images` in the manifest.
 
 If required tools are unavailable, follow the procedure with whatever browser/Word-generation tools exist, and state the limitation rather than claiming successful diagram preservation.
 
