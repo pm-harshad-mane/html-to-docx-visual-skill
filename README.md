@@ -4,11 +4,11 @@ This is an Agent Skills–format skill for ChatGPT-compatible Agent Skills envir
 
 ## Install
 
-The skill folder must be named `html-to-docx-visual` (matching `name:` in `SKILL.md`). This repository is called `html-to-docx-visual-skill`, so copy or rename it to `html-to-docx-visual/` first, leaving out `.git/` and `tests/`.
+**Ready-made package:** download [`dist/html-to-docx-visual.zip`](dist/html-to-docx-visual.zip). It contains the correctly named `html-to-docx-visual/` folder with only the runtime files, so there's nothing to build. Maintainers: after changing any packaged file, run `python scripts/build_skill_zip.py` and commit the updated zip.
 
-- **Claude (web/desktop chat):** ZIP the `html-to-docx-visual/` folder, then **Customize → Skills → + → Create skill → Upload a skill**. Enable code execution if prompted.
-- **Claude Code:** Copy the folder to `~/.claude/skills/html-to-docx-visual/` (or `.claude/skills/` in a project).
-- **Codex:** Copy the folder to `~/.agents/skills/html-to-docx-visual/` (or `.agents/skills/` in a project).
+- **Claude (web/desktop chat):** Upload the zip via **Customize → Skills → + → Create skill → Upload a skill**. Enable code execution if prompted.
+- **Claude Code:** Unzip and copy the `html-to-docx-visual/` folder to `~/.claude/skills/html-to-docx-visual/` (or `.claude/skills/` in a project).
+- **Codex:** Unzip and copy the `html-to-docx-visual/` folder to `~/.agents/skills/html-to-docx-visual/` (or `.agents/skills/` in a project).
 - **ChatGPT:** On eligible workspace plans, open **Plugins → Skills → Create → Upload from your computer**. Skill upload availability depends on plan and workspace permissions. On plans without skill upload, give ChatGPT this `SKILL.md` as instructions and the HTML as an attachment, or use Codex.
 
 ## Run standalone from terminal

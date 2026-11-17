@@ -169,3 +169,17 @@ def test_security_hidden_content_and_bare_svg(tmp_path):
     assert sec['removed_remote_images'] == ['https://example.invalid/remote.png']
     assert report['hidden_elements_removed'] >= 1
     assert next(d for d in report['diagrams'] if d['detection'] == 'graphic')['alt'] == 'Bare chart'
+
+
+# --- packaged skill ----------------------------------------------------------
+
+def test_dist_zip_matches_sources():
+    """dist/ zip must be rebuilt (scripts/build_skill_zip.py) whenever a packaged file changes."""
+    import build_skill_zip as build
+    name = build.skill_name()
+    archive = REPO / 'dist' / f'{name}.zip'
+    assert archive.is_file(), 'run: python scripts/build_skill_zip.py'
+    with zipfile.ZipFile(archive) as z:
+        assert sorted(z.namelist()) == sorted(f'{name}/{p}' for p in build.INCLUDE)
+        for rel in build.INCLUDE:
+            assert z.read(f'{name}/{rel}') == (REPO / rel).read_bytes(), f'{rel} is stale in {archive.name}'
