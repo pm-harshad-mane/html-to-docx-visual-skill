@@ -1,0 +1,13 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Example architecture</title><style>
+body{font-family:Arial,sans-serif;max-width:920px;margin:auto;color:#18212c;line-height:1.55}
+h1{color:#263d68}.architecture-diagram{border-radius:16px;border:1px solid #d4dae5;background:#f3f7ff;padding:24px;margin:18px 0;box-shadow:0 4px 12px #0002}
+.diagram-line{display:flex;gap:15px;align-items:center;justify-content:space-between}
+.node{background:white;color:#1b344e;border:2px solid #789ace;border-radius:12px;padding:20px 16px;text-align:center;flex:1;font-weight:bold;box-shadow:0 3px 5px #0001}
+.connector{font-size:32px;color:#39628b}
+th,td{border:1px solid #aab;padding:8px}table{border-collapse:collapse;width:100%}
+</style></head><body>
+<h1>Request flow example</h1><p>The following architecture is built with ordinary divs, spans and CSS, not Mermaid.</p>
+<div class="architecture-diagram" data-export-as-image="true"><div class="diagram-line"><div class="node">Publisher</div><span class="connector">➜</span><div class="node">Decision Fabric</div><span class="connector">➜</span><div class="node">Vendor container</div></div></div>
+<h2>Responsibilities</h2><p>The headings, prose, and following table should remain editable in Word.</p>
+<table><tr><th>Component</th><th>Function</th></tr><tr><td>Publisher</td><td>Sends the request</td></tr><tr><td>Vendor</td><td>Returns enrichment</td></tr></table>
+</body></html>
