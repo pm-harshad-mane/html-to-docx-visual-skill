@@ -1,6 +1,32 @@
 # HTML to DOCX Visual — portable Agent Skill
 
-This is an Agent Skills–format skill for ChatGPT-compatible Agent Skills environments and Claude. The main instructions live in `SKILL.md`. The included Python converter is optional but useful when a shell, Chromium and Pandoc are available.
+Converts AI-generated HTML documents into editable Word (`.docx`) files while preserving CSS, div/span, SVG, Canvas, and JavaScript-created diagrams as sharp embedded images. Use it for HTML-to-Word export, especially technical reports and architecture documents with browser-rendered diagrams.
+
+## Why this skill exists
+
+AI assistants often produce rich HTML reports where diagrams aren't images at all. They're built from styled `<div>`s and `<span>`s, Flexbox/Grid layouts, CSS arrows, inline SVG, Canvas, or JavaScript-generated DOM. Ordinary HTML-to-Word converters handle those badly: a flowchart collapses into a pile of loose paragraphs, connectors and colours disappear, and Canvas or script-drawn charts vanish entirely. Screenshotting whole pages has the opposite problem: everything looks right, but nothing can be edited.
+
+This skill does both jobs, each part the right way:
+
+| Part of the HTML | In the Word document |
+|---|---|
+| Headings, paragraphs, lists, links | Editable text using Word heading styles |
+| Data tables (`<table>`) | Real, editable Word tables |
+| Diagrams (CSS/div/span, SVG, Canvas, JS-rendered) | One sharp, high-resolution image each, rendered by a real browser exactly as displayed and placed where the diagram was |
+
+The original HTML stays the editable source for the diagrams.
+
+**Typical uses:** architecture and design documents, technical reports, request-flow and process write-ups, and any AI-generated HTML that has to be shared, reviewed or archived as a Word file.
+
+## How it works
+
+1. Renders the HTML in headless Chromium, waiting for fonts and scripts.
+2. Finds diagrams, using explicit `data-export-as-image="true"` markers first, then meaningful class names (`flowchart`, `architecture-diagram`, …), then layout heuristics and standalone SVG/Canvas.
+3. Screenshots each diagram at high resolution and swaps it for an image in an export-only copy of the HTML.
+4. Converts that copy to `.docx` with Pandoc and tidies the layout (margins, table borders, image sizing).
+5. Writes a `conversion_report.json` listing every detected diagram, plus optional page previews for checking.
+
+The main instructions live in `SKILL.md`, in Agent Skills format for Claude and other Agent Skills–compatible environments (Codex, ChatGPT). The included Python converter (`scripts/convert.py`) is optional but recommended when a shell, Chromium and Pandoc are available.
 
 ## Install
 
